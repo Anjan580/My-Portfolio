@@ -178,7 +178,7 @@ with tab3:
         submit = st.form_submit_button("Send Message")
 
         if submit:
-            st.success("Thank you! I will get back to you soon 😊")
+            st.success("This feature will be available soon 😊")
 
 # ---------------- FOOTER ----------------
 st.divider()
