@@ -76,7 +76,7 @@ with col1:
 
 with col2:
     st.title("👨‍💻 Anjani Kumar Pokhrel")
-    st.subheader("AI / Machine Learning Intern | Data Analyst")
+    st.subheader("Data Analyst intern at Foodmandu | Aspiring  AI/ML | Data science")
     st.write("""
 📍 Kathmandu, Nepal  
 📧 anjanpokhrel580@gmail.com  
@@ -84,7 +84,7 @@ with col2:
 🔗 [LinkedIn](https://www.linkedin.com/in/anjan-pokhrel/)  
 💻 [GitHub](https://github.com/Anjan580)
 """)
-
+    
 # ---------------- RESUME DOWNLOAD ----------------
 with open("Anjani Kumar Pokhrel_CV.pdf", "rb") as file:
     st.download_button(
@@ -103,9 +103,8 @@ tab1, tab2, tab3 = st.tabs(["🙋 About", "📂 Projects", "📬 Contact"])
 with tab1:
     st.header("🎯 Career Objective")
     st.write("""
-    Seeking an **AI/ML internship** to apply my data analysis and machine learning skills,
-    gain real-world experience, and grow under professional mentorship.
-    """)
+             Aspiring AI and Machine Learning professional currently working as a Data Analyst Intern at **Foodmandu** . Skilled in data analysis, visualization, and statistical modeling, with a strong interest in **Deep Learning and Data Science**. Seeking opportunities to leverage data-driven insights and develop impactful AI-based solutions.
+             """)
 
     st.header("🛠️ Skills")
     col1, col2 = st.columns(2)
@@ -114,7 +113,7 @@ with tab1:
         st.markdown("""
         **Technical Skills**
         - Data Analysis & Visualization: Excel, Tableau, Power BI  
-        - Programming: Python (Pandas, NumPy, Scikit-learn, PyTorch)  
+        - Programming: Python (Pandas, NumPy, Scikit-learn, TensorFlow) 
         - Databases: MySQL, PostgreSQL, SQL Server  
         - Statistics: Hypothesis Testing, Probability
         """)
