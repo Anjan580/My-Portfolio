@@ -174,6 +174,48 @@ with tab2:
         🔗 https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering
         """)
 
+    with st.expander("📊 Foodmandu-Style Order Performance Dashboard | Power BI"):
+        st.write("""
+        **Tech:** Power BI | DAX | Data Modeling | Data Visualization  
+        ✔ Interactive KPI Dashboard (Orders, Revenue, AOV, Cancellation Rate)  
+        ✔ Payment Method & Customer Insights  
+        ✔ Business-Oriented Data Analysis  
+        ⚠️ Uses synthetic (dummy) data for portfolio purposes  
+        🔗 https://github.com/Anjan580/Foodmandu-Order-Performance-Dashboard
+    """)
+        
+    with st.expander("📊 Superstore Sales Dashboard | Power BI"):
+        st.write("""
+        **Tech:** Power BI | DAX | Data Modeling | Data Visualization  
+        ✔ Total Sales, Profit & Orders KPIs  
+        ✔ Sales & Profit Trends Analysis  
+        ✔ Category × Region Performance  
+        ✔ Sub-Category & Ship Mode Insights  
+        🔗 https://lnkd.in/g7ngmDvX
+        """)
+
+    with st.expander("🍷 Wine Quality Prediction using Machine Learning"):
+        st.write("""
+        **Tech:** Python | Pandas | NumPy | Matplotlib | Seaborn | Scikit-learn  
+        ✔ Exploratory Data Analysis (EDA)  
+        ✔ Feature Selection & Data Preprocessing  
+        ✔ Random Forest Classifier  
+        ✔ Model Evaluation (Confusion Matrix & Accuracy)  
+        🔗 https://lnkd.in/gfwunjEA
+        """)
+
+    with st.expander("🔎 Sonar Rock vs Mine Classification | Machine Learning"):
+        st.write("""
+        **Tech:** Python | Pandas | NumPy | Scikit-learn | Matplotlib  
+        ✔ End-to-End ML Pipeline Implementation  
+        ✔ Logistic Regression Model  
+        ✔ Train-Test Split & Model Evaluation  
+        ✔ Accuracy & Confusion Matrix Analysis  
+        ✔ Understanding Overfitting & Model Generalization  
+        🔗 https://lnkd.in/gn9GtAY9
+        """)
+
+
 # ================= CONTACT TAB =================
 with tab3:
     st.header("📬 Contact Me")
