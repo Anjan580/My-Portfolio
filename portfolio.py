@@ -148,21 +148,21 @@ with tab2:
         **Tech:** Python, Scikit-learn, NLTK  
         ✔ Logistic Regression model  
         ✔ ~96% accuracy  
-        🔗 https://github.com/Anjan580/Fake_News_Detection_by_using-_logisticRegression
+        🔗 [Github](https://github.com/Anjan580/Fake_News_Detection_by_using-_logisticRegression)
         """)
 
     with st.expander("📈 Gold Price Prediction"):
         st.write("""
         **Tech:** Python  
         ✔ Regression-based forecasting  
-        🔗 https://github.com/Anjan580/Gold-Price-Prediction-using-Machine-Learning
+        🔗 [Github](https://github.com/Anjan580/Gold-Price-Prediction-using-Machine-Learning)
         """)
 
     with st.expander("👥 HR Analytics Dashboard"):
         st.write("""
         **Tech:** Power BI  
         ✔ KPIs, Attrition & Workforce Analysis  
-        🔗 https://github.com/Anjan580/HR_Analytics_dashboard_power_BI
+        🔗 [Github](https://github.com/Anjan580/HR_Analytics_dashboard_power_BI)
         """)
 
     with st.expander("🛍️ Customer Segmentation using K-Means Clustering"):
@@ -171,7 +171,7 @@ with tab2:
         ✔ Unsupervised Learning (K-Means Clustering)  
         ✔ Elbow Method (WCSS) for Optimal Clusters  
         ✔ Customer Segmentation & Business Insights  
-        🔗 https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering
+        🔗 [Github](https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering)
         """)
 
     with st.expander("📊 Foodmandu-Style Order Performance Dashboard | Power BI"):
@@ -181,7 +181,7 @@ with tab2:
         ✔ Payment Method & Customer Insights  
         ✔ Business-Oriented Data Analysis  
         ⚠️ Uses synthetic (dummy) data for portfolio purposes  
-        🔗 https://github.com/Anjan580/Foodmandu-Order-Performance-Dashboard
+        🔗[Github]( https://github.com/Anjan580/Foodmandu-Order-Performance-Dashboard)
     """)
         
     with st.expander("📊 Superstore Sales Dashboard | Power BI"):
@@ -191,7 +191,7 @@ with tab2:
         ✔ Sales & Profit Trends Analysis  
         ✔ Category × Region Performance  
         ✔ Sub-Category & Ship Mode Insights  
-        🔗 https://lnkd.in/g7ngmDvX
+        🔗 [Github](https://github.com/Anjan580/Super-Store-dashboard)
         """)
 
     with st.expander("🍷 Wine Quality Prediction using Machine Learning"):
@@ -201,7 +201,7 @@ with tab2:
         ✔ Feature Selection & Data Preprocessing  
         ✔ Random Forest Classifier  
         ✔ Model Evaluation (Confusion Matrix & Accuracy)  
-        🔗 https://lnkd.in/gfwunjEA
+        🔗 [Github](https://github.com/Anjan580/Wine-Quality-Prediction-using-Machine-Learning)
         """)
 
     with st.expander("🔎 Sonar Rock vs Mine Classification | Machine Learning"):
@@ -212,7 +212,7 @@ with tab2:
         ✔ Train-Test Split & Model Evaluation  
         ✔ Accuracy & Confusion Matrix Analysis  
         ✔ Understanding Overfitting & Model Generalization  
-        🔗 https://lnkd.in/gn9GtAY9
+        🔗 [Github](https://github.com/Anjan580/-SONAR-Rock-vs-Mine-Prediction)
         """)
 
 
