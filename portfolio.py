@@ -165,6 +165,15 @@ with tab2:
         🔗 https://github.com/Anjan580/HR_Analytics_dashboard_power_BI
         """)
 
+    with st.expander("🛍️ Customer Segmentation using K-Means Clustering"):
+        st.write("""
+        **Tech:** Python | Pandas | NumPy | Matplotlib | Seaborn | Scikit-learn  
+        ✔ Unsupervised Learning (K-Means Clustering)  
+        ✔ Elbow Method (WCSS) for Optimal Clusters  
+        ✔ Customer Segmentation & Business Insights  
+        🔗 https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering
+        """)
+
 # ================= CONTACT TAB =================
 with tab3:
     st.header("📬 Contact Me")
