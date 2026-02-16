@@ -1,4 +1,7 @@
 import base64
+import requests
+import time
+
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
@@ -228,7 +231,25 @@ with tab3:
         submit = st.form_submit_button("Send Message")
 
         if submit:
-            st.success("Sorry But, This feature will be available soon 😊")
+            if not name or not email or not message:
+                st.warning("⚠ Please fill all fields.")
+            else:
+                with st.spinner("Sending message..."):
+                    time.sleep(1)
+
+                    response = requests.post(
+                        "https://formspree.io/f/mykdjywe",  # 🔴 Replace this
+                        data={
+                            "name": name,
+                            "email": email,
+                            "message": message
+                        }
+                    )
+
+                    if response.status_code == 200:
+                        st.success("✅ Message sent successfully! I will get back to you soon.")
+                    else:
+                        st.error("❌ Something went wrong. Please try again later.")
 
 # ---------------- FOOTER ----------------
 st.divider()
