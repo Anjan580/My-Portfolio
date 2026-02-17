@@ -10,5 +10,5 @@ Personal portfolio website built with **Streamlit** showcasing my projects, skil
 - Portfolio:https://my-portfolio-anjan.streamlit.app/
 
 ## 🔗 Connect With Me
-- [LinkedIn:] (https://www.linkedin.com/in/anjan-pokhrel/) 
-- [GitHub:] (https://github.com/Anjan580)  
+- [LinkedIn:](https://www.linkedin.com/in/anjan-pokhrel/) 
+- [GitHub:](https://github.com/Anjan580)  
