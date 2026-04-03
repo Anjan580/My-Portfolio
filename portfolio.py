@@ -79,7 +79,7 @@ with col1:
 
 with col2:
     st.title("👨‍💻 Anjani Kumar Pokhrel")
-    st.subheader("Data Analyst intern at Foodmandu | Aspiring  AI/ML | Data science")
+    st.subheader("Data Analyst intern at Foodmandu |  Machine Learning & Data Science Enthusiast")
     st.write("""
 📍 Kathmandu, Nepal  
 📧 anjanpokhrel580@gmail.com  
@@ -132,7 +132,7 @@ with tab1:
     st.write("""
     **Bachelor’s in Computer Science & Information Technology**  
     Trinity International College, Dillibazar  
-    2022 – Present
+    2022 – 2026
     """)
 
     st.header("📘 Training")
