@@ -192,6 +192,16 @@ def inject_styles() -> None:
                 min-height: 100%;
             }
 
+            .hero-layout {
+                display: flex;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .hero-copy {
+                flex: 1;
+            }
+
             .hero-chip {
                 display: inline-block;
                 padding: 0.35rem 0.8rem;
@@ -237,16 +247,16 @@ def inject_styles() -> None:
 
             .profile-wrap {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 1.5rem;
-                min-height: 100%;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 0;
                 position: relative;
                 overflow: visible;
+                flex: 0 0 auto;
             }
 
             .profile-ring {
-                width: min(300px, 72vw);
+                width: min(220px, 42vw);
                 aspect-ratio: 1;
                 border-radius: 28px;
                 padding: 10px;
@@ -300,8 +310,8 @@ def inject_styles() -> None:
 
             .photo-badge {
                 position: absolute;
-                left: -10px;
-                bottom: 26px;
+                left: -8px;
+                bottom: 18px;
                 padding: 0.6rem 0.95rem;
                 border-radius: 999px;
                 background: rgba(15, 23, 42, 0.94);
@@ -418,6 +428,10 @@ def inject_styles() -> None:
             }
 
             @media (max-width: 900px) {
+                .hero-layout {
+                    flex-direction: column;
+                }
+
                 .highlight-grid {
                     grid-template-columns: 1fr;
                 }
@@ -425,6 +439,14 @@ def inject_styles() -> None:
                 .hero-card,
                 .profile-wrap {
                     padding: 1.2rem;
+                }
+
+                .profile-wrap {
+                    padding: 0;
+                }
+
+                .profile-ring {
+                    width: min(220px, 58vw);
                 }
 
                 .photo-badge {
@@ -444,12 +466,20 @@ inject_styles()
 image_base64 = load_base64_image(PROFILE_IMAGE)
 resume_bytes = load_resume_bytes()
 
-hero_col, profile_col = st.columns([1.45, 1], gap="large")
-
-with hero_col:
-    st.markdown(
+st.markdown(
         f"""
         <div class="hero-card">
+            <div class="hero-layout">
+                <div class="profile-wrap">
+                    <div class="profile-ring">
+                        <img src="data:image/jpeg;base64,{image_base64}" alt="Profile photo of {PROFILE['name']}">
+                    </div>
+                    <div class="photo-badge">
+                        Data + ML
+                        <span>Open to opportunities</span>
+                    </div>
+                </div>
+                <div class="hero-copy">
             <div class="hero-chip">Open to internships and data roles</div>
             <div class="hero-title">{PROFILE['name']}</div>
             <div class="hero-subtitle">{PROFILE['title']}</div>
@@ -461,26 +491,12 @@ with hero_col:
                 <span>Phone: {PROFILE['phone']}</span>
                 <span>Links: <a href="{PROFILE['linkedin']}" target="_blank">LinkedIn</a> | <a href="{PROFILE['github']}" target="_blank">GitHub</a></span>
             </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-with profile_col:
-    st.markdown(
-        f"""
-        <div class="profile-wrap hero-card">
-            <div class="profile-ring">
-                <img src="data:image/jpeg;base64,{image_base64}" alt="Profile photo of {PROFILE['name']}">
-            </div>
-            <div class="photo-badge">
-                Data + ML
-                <span>Open to opportunities</span>
+                </div>
             </div>
         </div>
         """,
         unsafe_allow_html=True,
-    )
+)
 
 st.download_button(
     "Download Resume",
