@@ -1,260 +1,594 @@
 import base64
+import re
+from pathlib import Path
+
 import requests
-import time
-
-
-def get_base64_image(image_path):
-    with open(image_path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode()
-
 import streamlit as st
 
-# ---------------- PAGE CONFIG ----------------
-st.set_page_config(
-    page_title="Anjani Kumar Pokhrel | Portfolio",
-    page_icon="👨‍💻",
-    layout="wide"
-)
+PAGE_TITLE = "Anjani Kumar Pokhrel | Portfolio"
+PAGE_ICON = ":briefcase:"
+EMAIL_REGEX = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+BASE_DIR = Path(__file__).resolve().parent
+PROFILE_IMAGE = BASE_DIR / "P5.jpg"
+RESUME_FILE = BASE_DIR / "Anjani Kumar Pokhrel_CV.pdf"
+FORMSPREE_ENDPOINT = "https://formspree.io/f/mykdjywe"
 
-# ---------------- DARK MODE + PROFILE CSS ----------------
-st.markdown("""
-<style>
-body {
-    background-color: #0e1117;
-    color: white;
+PROFILE = {
+    "name": "Anjani Kumar Pokhrel",
+    "title": "Data Analyst Intern at Foodmandu",
+    "tagline": "Machine Learning and Data Science enthusiast building practical, data-driven solutions.",
+    "location": "Kathmandu, Nepal",
+    "email": "anjanpokhrel580@gmail.com",
+    "phone": "+977 9869879472",
+    "linkedin": "https://www.linkedin.com/in/anjan-pokhrel/",
+    "github": "https://github.com/Anjan580",
+    "objective": (
+        "Aspiring AI and Machine Learning professional with hands-on experience in data analysis, "
+        "visualization, and statistical modeling. I enjoy turning messy data into clear business "
+        "insights and building ML projects that solve real problems."
+    ),
 }
 
-/* Profile image container */
-.profile-img {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    padding: 4px;
-    background: linear-gradient(135deg, #00c6ff, #7f00ff, #ff0080);
-    box-shadow: 0 0 20px rgba(128, 0, 255, 0.6);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+SKILLS = {
+    "Data & BI": ["Excel", "Power BI", "Tableau", "SQL"],
+    "Programming": ["Python", "Pandas", "NumPy", "Scikit-learn", "TensorFlow"],
+    "Databases": ["MySQL", "PostgreSQL", "SQL Server"],
+    "Workflow": ["Git", "GitHub", "Jupyter", "VS Code", "Streamlit", "FastAPI"],
+    "Core Strengths": ["EDA", "Visualization", "Hypothesis Testing", "Communication"],
 }
 
-/* Image inside */
-.profile-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: #0e1117;
+HIGHLIGHTS = [
+    ("Projects", "8+"),
+    ("Focus", "AI / ML"),
+    ("Current Role", "Foodmandu"),
+]
+
+PROJECTS = [
+    {
+        "title": "Fake News Detection",
+        "tech": "Python, Scikit-learn, NLTK",
+        "summary": "Built a logistic regression classifier for fake news detection with about 96% accuracy.",
+        "link": "https://github.com/Anjan580/Fake_News_Detection_by_using-_logisticRegression",
+    },
+    {
+        "title": "Gold Price Prediction",
+        "tech": "Python, Regression Modeling",
+        "summary": "Created a regression-based forecasting workflow for gold price prediction.",
+        "link": "https://github.com/Anjan580/Gold-Price-Prediction-using-Machine-Learning",
+    },
+    {
+        "title": "HR Analytics Dashboard",
+        "tech": "Power BI",
+        "summary": "Designed KPI dashboards focused on attrition, workforce trends, and HR decision support.",
+        "link": "https://github.com/Anjan580/HR_Analytics_dashboard_power_BI",
+    },
+    {
+        "title": "Customer Segmentation Using K-Means",
+        "tech": "Python, Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn",
+        "summary": "Segmented customers using clustering and the elbow method to uncover actionable business insights.",
+        "link": "https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering",
+    },
+    {
+        "title": "Foodmandu-Style Order Performance Dashboard",
+        "tech": "Power BI, DAX, Data Modeling",
+        "summary": "Built an interactive portfolio dashboard around orders, revenue, AOV, and customer insights using synthetic data.",
+        "link": "https://github.com/Anjan580/Foodmandu-Order-Performance-Dashboard",
+    },
+    {
+        "title": "Superstore Sales Dashboard",
+        "tech": "Power BI, DAX, Data Visualization",
+        "summary": "Explored sales, profit, and category-region performance through a clean decision-making dashboard.",
+        "link": "https://github.com/Anjan580/Super-Store-dashboard",
+    },
+    {
+        "title": "Wine Quality Prediction",
+        "tech": "Python, Pandas, NumPy, Scikit-learn",
+        "summary": "Ran EDA, preprocessing, feature selection, and classification to predict wine quality.",
+        "link": "https://github.com/Anjan580/Wine-Quality-Prediction-using-Machine-Learning",
+    },
+    {
+        "title": "Sonar Rock vs Mine Classification",
+        "tech": "Python, Pandas, NumPy, Scikit-learn, Matplotlib",
+        "summary": "Implemented an end-to-end ML pipeline with evaluation metrics and model generalization analysis.",
+        "link": "https://github.com/Anjan580/-SONAR-Rock-vs-Mine-Prediction",
+    },
+]
+
+EDUCATION = {
+    "degree": "Bachelor's in Computer Science and Information Technology",
+    "institution": "Trinity International College, Dillibazar, Kathmandu",
+    "period": "2022 - 2026",
 }
 
-/* Hover animation */
-.profile-img:hover {
-    transform: scale(1.07) rotate(1deg);
-    box-shadow: 0 0 35px rgba(255, 0, 128, 0.9);
+TRAINING = {
+    "program": "Data Science with Python",
+    "provider": "Broadway Infosys Nepal",
+    "period": "May 2025 - August 2025",
+    "details": "135 hours of hands-on training in Python-based data science workflows.",
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-    .profile-img {
-        width: 110px;
-        height: 110px;
-        box-shadow: 0 0 15px rgba(128, 0, 255, 0.6);
-    }
-}
-</style>
-""", unsafe_allow_html=True)
 
-# ---------------- HEADER ----------------
-col1, col2 = st.columns([1, 3])
-img_base64 = get_base64_image("P5.jpg")
+def load_base64_image(image_path: Path) -> str:
+    with image_path.open("rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
 
-with col1:
+
+@st.cache_data(show_spinner=False)
+def load_resume_bytes() -> bytes:
+    return RESUME_FILE.read_bytes()
+
+
+def is_valid_email(email: str) -> bool:
+    return bool(EMAIL_REGEX.match(email.strip()))
+
+
+def send_message(name: str, email: str, message: str) -> tuple[bool, str]:
+    try:
+        response = requests.post(
+            FORMSPREE_ENDPOINT,
+            data={"name": name.strip(), "email": email.strip(), "message": message.strip()},
+            timeout=10,
+        )
+    except requests.RequestException:
+        return False, "Couldn't reach the contact service. Please try again in a moment."
+
+    if response.ok:
+        return True, "Message sent successfully. I'll get back to you soon."
+
+    return False, "Something went wrong while sending the message. Please try again later."
+
+
+def inject_styles() -> None:
+    st.markdown(
+        """
+        <style>
+            :root {
+                --bg: #081120;
+                --surface: rgba(12, 23, 41, 0.82);
+                --surface-strong: #0f1b30;
+                --text: #e8eef9;
+                --muted: #a8b6cc;
+                --accent: #38bdf8;
+                --accent-2: #22c55e;
+                --border: rgba(148, 163, 184, 0.16);
+                --shadow: 0 18px 45px rgba(2, 8, 23, 0.34);
+            }
+
+            .stApp {
+                background:
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
+                    radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 30%),
+                    linear-gradient(180deg, #081120 0%, #0f172a 55%, #131c31 100%);
+                color: var(--text);
+            }
+
+            .block-container {
+                padding-top: 2.4rem;
+                padding-bottom: 2rem;
+            }
+
+            h1, h2, h3 {
+                color: var(--text);
+                letter-spacing: -0.02em;
+            }
+
+            p, li, label, .stMarkdown, .stCaption {
+                color: var(--muted);
+            }
+
+            .hero-card,
+            .info-card,
+            .project-card,
+            .contact-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 24px;
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(10px);
+            }
+
+            .hero-card {
+                padding: 1.7rem;
+                min-height: 100%;
+            }
+
+            .hero-chip {
+                display: inline-block;
+                padding: 0.35rem 0.8rem;
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.14);
+                color: #7dd3fc;
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin-bottom: 0.9rem;
+            }
+
+            .hero-title {
+                font-size: clamp(2.1rem, 4vw, 3.5rem);
+                line-height: 1.03;
+                margin-bottom: 0.35rem;
+                color: var(--text);
+            }
+
+            .hero-subtitle {
+                font-size: 1.15rem;
+                color: #86efac;
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                line-height: 1.7;
+                margin-bottom: 1rem;
+            }
+
+            .contact-list {
+                display: grid;
+                gap: 0.45rem;
+                margin: 1rem 0 0;
+            }
+
+            .contact-list a {
+                color: var(--accent-2);
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .profile-wrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 1.5rem;
+                min-height: 100%;
+                position: relative;
+                overflow: visible;
+            }
+
+            .profile-ring {
+                width: min(300px, 72vw);
+                aspect-ratio: 1;
+                border-radius: 28px;
+                padding: 10px;
+                background: linear-gradient(135deg, #38bdf8, #2563eb, #22c55e);
+                box-shadow: 0 22px 55px rgba(2, 8, 23, 0.42);
+                transform: rotate(-3deg);
+                position: relative;
+                animation: floatPortrait 5s ease-in-out infinite;
+                transition: transform 0.35s ease, box-shadow 0.35s ease;
+            }
+
+            .profile-ring::before,
+            .profile-ring::after {
+                content: "";
+                position: absolute;
+                inset: -14px;
+                border-radius: 36px;
+                z-index: -1;
+            }
+
+            .profile-ring::before {
+                background: linear-gradient(135deg, rgba(56, 189, 248, 0.26), rgba(34, 197, 94, 0.16));
+                filter: blur(12px);
+            }
+
+            .profile-ring::after {
+                inset: auto;
+                width: 72%;
+                height: 72%;
+                right: -18px;
+                bottom: -18px;
+                border-radius: 30px;
+                background:
+                    radial-gradient(circle at center, rgba(37, 99, 235, 0.32), transparent 65%);
+            }
+
+            .profile-ring img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 22px;
+                display: block;
+                transform: rotate(3deg);
+                filter: saturate(1.08) contrast(1.04);
+            }
+
+            .profile-ring:hover {
+                transform: rotate(-1deg) translateY(-6px) scale(1.02);
+                box-shadow: 0 28px 70px rgba(2, 8, 23, 0.52);
+            }
+
+            .photo-badge {
+                position: absolute;
+                left: -10px;
+                bottom: 26px;
+                padding: 0.6rem 0.95rem;
+                border-radius: 999px;
+                background: rgba(15, 23, 42, 0.94);
+                border: 1px solid rgba(125, 211, 252, 0.18);
+                box-shadow: 0 16px 32px rgba(2, 8, 23, 0.24);
+                color: var(--text);
+                font-size: 0.88rem;
+                font-weight: 700;
+                letter-spacing: 0.01em;
+            }
+
+            .photo-badge span {
+                display: block;
+                font-size: 0.78rem;
+                font-weight: 600;
+                color: var(--muted);
+                margin-top: 0.15rem;
+            }
+
+            @keyframes floatPortrait {
+                0%,
+                100% {
+                    transform: rotate(-3deg) translateY(0px);
+                }
+                50% {
+                    transform: rotate(-2deg) translateY(-8px);
+                }
+            }
+
+            .highlight-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.9rem;
+                margin-top: 1rem;
+            }
+
+            .info-card,
+            .project-card,
+            .contact-card {
+                padding: 1.15rem 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .metric-label {
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: var(--muted);
+                margin-bottom: 0.25rem;
+            }
+
+            .metric-value {
+                font-size: 1.15rem;
+                font-weight: 700;
+                color: var(--text);
+            }
+
+            .skill-pill {
+                display: inline-block;
+                margin: 0.2rem 0.35rem 0.2rem 0;
+                padding: 0.36rem 0.75rem;
+                border-radius: 999px;
+                background: rgba(56, 189, 248, 0.14);
+                color: #93c5fd;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+
+            .section-label {
+                font-size: 0.8rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.09em;
+                color: var(--accent);
+                margin-bottom: 0.55rem;
+            }
+
+            .project-title {
+                color: var(--text);
+                font-size: 1.1rem;
+                font-weight: 700;
+                margin-bottom: 0.3rem;
+            }
+
+            .project-tech {
+                color: #7dd3fc;
+                font-size: 0.92rem;
+                font-weight: 600;
+                margin-bottom: 0.55rem;
+            }
+
+            .project-link a {
+                color: var(--accent-2);
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+            .stDownloadButton button,
+            .stFormSubmitButton button {
+                border-radius: 999px;
+                border: none;
+                background: linear-gradient(135deg, #0ea5e9, #2563eb);
+                color: white;
+                font-weight: 700;
+                padding: 0.6rem 1.2rem;
+            }
+
+            .stTextInput input,
+            .stTextArea textarea {
+                border-radius: 16px;
+                border: 1px solid rgba(148, 163, 184, 0.18);
+                background: rgba(15, 23, 42, 0.72);
+                color: var(--text);
+            }
+
+            @media (max-width: 900px) {
+                .highlight-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-card,
+                .profile-wrap {
+                    padding: 1.2rem;
+                }
+
+                .photo-badge {
+                    left: 12px;
+                    bottom: 12px;
+                }
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON, layout="wide")
+inject_styles()
+
+image_base64 = load_base64_image(PROFILE_IMAGE)
+resume_bytes = load_resume_bytes()
+
+hero_col, profile_col = st.columns([1.45, 1], gap="large")
+
+with hero_col:
     st.markdown(
         f"""
-        <div class="profile-img">
-            <img src="data:image/jpeg;base64,{img_base64}">
+        <div class="hero-card">
+            <div class="hero-chip">Open to internships and data roles</div>
+            <div class="hero-title">{PROFILE['name']}</div>
+            <div class="hero-subtitle">{PROFILE['title']}</div>
+            <div class="hero-description">{PROFILE['tagline']}</div>
+            <div class="hero-description">{PROFILE['objective']}</div>
+            <div class="contact-list">
+                <span>Location: {PROFILE['location']}</span>
+                <span>Email: <a href="mailto:{PROFILE['email']}">{PROFILE['email']}</a></span>
+                <span>Phone: {PROFILE['phone']}</span>
+                <span>Links: <a href="{PROFILE['linkedin']}" target="_blank">LinkedIn</a> | <a href="{PROFILE['github']}" target="_blank">GitHub</a></span>
+            </div>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
 
-
-
-with col2:
-    st.title("👨‍💻 Anjani Kumar Pokhrel")
-    st.subheader("Data Analyst intern at Foodmandu |  Machine Learning & Data Science Enthusiast")
-    st.write("""
-📍 Kathmandu, Nepal  
-📧 anjanpokhrel580@gmail.com  
-📞 9869879472  
-🔗 [LinkedIn](https://www.linkedin.com/in/anjan-pokhrel/)  
-💻 [GitHub](https://github.com/Anjan580)
-""")
-    
-# ---------------- RESUME DOWNLOAD ----------------
-with open("Anjani Kumar Pokhrel_CV.pdf", "rb") as file:
-    st.download_button(
-        "📄 Download Resume",
-        file,
-        file_name="Anjani Kumar Pokhrel_CV.pdf",
-        mime="application/pdf"
+with profile_col:
+    st.markdown(
+        f"""
+        <div class="profile-wrap hero-card">
+            <div class="profile-ring">
+                <img src="data:image/jpeg;base64,{image_base64}" alt="Profile photo of {PROFILE['name']}">
+            </div>
+            <div class="photo-badge">
+                Data + ML
+                <span>Open to opportunities</span>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
-st.divider()
+st.download_button(
+    "Download Resume",
+    resume_bytes,
+    file_name=RESUME_FILE.name,
+    mime="application/pdf",
+)
 
-# ---------------- TABS ----------------
-tab1, tab2, tab3 = st.tabs(["🙋 About", "📂 Projects", "📬 Contact"])
+st.markdown('<div class="highlight-grid">' + ''.join(
+    f'<div class="info-card"><div class="metric-label">{label}</div><div class="metric-value">{value}</div></div>'
+    for label, value in HIGHLIGHTS
+) + '</div>', unsafe_allow_html=True)
 
-# ================= ABOUT TAB =================
-with tab1:
-    st.header("🎯 Career Objective")
-    st.write("""
-             Aspiring AI and Machine Learning professional currently working as a Data Analyst Intern at **Foodmandu** . Skilled in data analysis, visualization, and statistical modeling, with a strong interest in **Deep Learning and Data Science**. Seeking opportunities to leverage data-driven insights and develop impactful AI-based solutions.
-             """)
+about_tab, projects_tab, contact_tab = st.tabs(["About", "Projects", "Contact"])
 
-    st.header("🛠️ Skills")
-    col1, col2 = st.columns(2)
+with about_tab:
+    st.subheader("Skills")
+    skill_columns = st.columns(2)
+    for index, (category, entries) in enumerate(SKILLS.items()):
+        with skill_columns[index % 2]:
+            pills = "".join(f'<span class="skill-pill">{skill}</span>' for skill in entries)
+            st.markdown(
+                f"""
+                <div class="info-card">
+                    <div class="section-label">{category}</div>
+                    <div>{pills}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
-    with col1:
-        st.markdown("""
-        **Technical Skills**
-        - Data Analysis & Visualization: Excel, Tableau, Power BI  
-        - Programming: Python (Pandas, NumPy, Scikit-learn, TensorFlow) 
-        - Databases: MySQL, PostgreSQL, SQL Server  
-        - Statistics: Hypothesis Testing, Probability
-        """)
+    edu_col, train_col = st.columns(2, gap="large")
 
-    with col2:
-        st.markdown("""
-        **Tools & Soft Skills**
-        - Tools: Git, GitHub, VS Code, Jupyter, Streamlit, FastAPI  
-        - Soft Skills: Problem-Solving, Communication, Critical Thinking
-        """)
+    with edu_col:
+        st.markdown(
+            f"""
+            <div class="info-card">
+                <div class="section-label">Education</div>
+                <div class="metric-value">{EDUCATION['degree']}</div>
+                <p><strong>{EDUCATION['institution']}</strong><br>{EDUCATION['period']}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    st.header("🎓 Education")
-    st.write("""
-    **Bachelor’s in Computer Science & Information Technology**  
-<<<<<<< HEAD
-    Trinity International College, Dillibazar  
-=======
-    Trinity International College, Dillibazar Kathmandu 
->>>>>>> 469aa7d (Add end years of eduction)
-    2022 – 2026
-    """)
+    with train_col:
+        st.markdown(
+            f"""
+            <div class="info-card">
+                <div class="section-label">Training</div>
+                <div class="metric-value">{TRAINING['program']}</div>
+                <p><strong>{TRAINING['provider']}</strong><br>{TRAINING['period']}</p>
+                <p>{TRAINING['details']}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    st.header("📘 Training")
-    st.write("""
-    **Data Science with Python**  
-    Broadway Infosys Nepal (May – Aug 2025)  
-    ✔ 135 hours hands-on training
-    """)
+with projects_tab:
+    st.subheader("Selected Work")
+    project_columns = st.columns(2, gap="large")
+    for index, project in enumerate(PROJECTS):
+        with project_columns[index % 2]:
+            st.markdown(
+                f"""
+                <div class="project-card">
+                    <div class="project-title">{project['title']}</div>
+                    <div class="project-tech">{project['tech']}</div>
+                    <p>{project['summary']}</p>
+                    <div class="project-link"><a href="{project['link']}" target="_blank">View project</a></div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
-# ================= PROJECTS TAB =================
-with tab2:
-    st.header("📂 Projects")
+with contact_tab:
+    st.markdown(
+        """
+        <div class="contact-card">
+            <div class="section-label">Let's Connect</div>
+            <p>If you would like to discuss internships, data projects, or collaboration opportunities, send a message here.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-    with st.expander("📰 Fake News Detection"):
-        st.write("""
-        **Tech:** Python, Scikit-learn, NLTK  
-        ✔ Logistic Regression model  
-        ✔ ~96% accuracy  
-        🔗 [Github](https://github.com/Anjan580/Fake_News_Detection_by_using-_logisticRegression)
-        """)
-
-    with st.expander("📈 Gold Price Prediction"):
-        st.write("""
-        **Tech:** Python  
-        ✔ Regression-based forecasting  
-        🔗 [Github](https://github.com/Anjan580/Gold-Price-Prediction-using-Machine-Learning)
-        """)
-
-    with st.expander("👥 HR Analytics Dashboard"):
-        st.write("""
-        **Tech:** Power BI  
-        ✔ KPIs, Attrition & Workforce Analysis  
-        🔗 [Github](https://github.com/Anjan580/HR_Analytics_dashboard_power_BI)
-        """)
-
-    with st.expander("🛍️ Customer Segmentation using K-Means Clustering"):
-        st.write("""
-        **Tech:** Python | Pandas | NumPy | Matplotlib | Seaborn | Scikit-learn  
-        ✔ Unsupervised Learning (K-Means Clustering)  
-        ✔ Elbow Method (WCSS) for Optimal Clusters  
-        ✔ Customer Segmentation & Business Insights  
-        🔗 [Github](https://github.com/Anjan580/Customer-Segmentation-using-K-Means-Clustering)
-        """)
-
-    with st.expander("📊 Foodmandu-Style Order Performance Dashboard | Power BI"):
-        st.write("""
-        **Tech:** Power BI | DAX | Data Modeling | Data Visualization  
-        ✔ Interactive KPI Dashboard (Orders, Revenue, AOV, Cancellation Rate)  
-        ✔ Payment Method & Customer Insights  
-        ✔ Business-Oriented Data Analysis  
-        ⚠️ Uses synthetic (dummy) data for portfolio purposes  
-        🔗[Github]( https://github.com/Anjan580/Foodmandu-Order-Performance-Dashboard)
-    """)
-        
-    with st.expander("📊 Superstore Sales Dashboard | Power BI"):
-        st.write("""
-        **Tech:** Power BI | DAX | Data Modeling | Data Visualization  
-        ✔ Total Sales, Profit & Orders KPIs  
-        ✔ Sales & Profit Trends Analysis  
-        ✔ Category × Region Performance  
-        ✔ Sub-Category & Ship Mode Insights  
-        🔗 [Github](https://github.com/Anjan580/Super-Store-dashboard)
-        """)
-
-    with st.expander("🍷 Wine Quality Prediction using Machine Learning"):
-        st.write("""
-        **Tech:** Python | Pandas | NumPy | Matplotlib | Seaborn | Scikit-learn  
-        ✔ Exploratory Data Analysis (EDA)  
-        ✔ Feature Selection & Data Preprocessing  
-        ✔ Random Forest Classifier  
-        ✔ Model Evaluation (Confusion Matrix & Accuracy)  
-        🔗 [Github](https://github.com/Anjan580/Wine-Quality-Prediction-using-Machine-Learning)
-        """)
-
-    with st.expander("🔎 Sonar Rock vs Mine Classification | Machine Learning"):
-        st.write("""
-        **Tech:** Python | Pandas | NumPy | Scikit-learn | Matplotlib  
-        ✔ End-to-End ML Pipeline Implementation  
-        ✔ Logistic Regression Model  
-        ✔ Train-Test Split & Model Evaluation  
-        ✔ Accuracy & Confusion Matrix Analysis  
-        ✔ Understanding Overfitting & Model Generalization  
-        🔗 [Github](https://github.com/Anjan580/-SONAR-Rock-vs-Mine-Prediction)
-        """)
-
-
-# ================= CONTACT TAB =================
-with tab3:
-    st.header("📬 Contact Me")
-
-    with st.form("contact_form"):
+    with st.form("contact_form", clear_on_submit=True):
         name = st.text_input("Your Name")
         email = st.text_input("Your Email")
-        message = st.text_area("Message")
+        message = st.text_area("Message", height=160, placeholder="Write a short message...")
+        submitted = st.form_submit_button("Send Message")
 
-        submit = st.form_submit_button("Send Message")
+        if submitted:
+            clean_name = name.strip()
+            clean_email = email.strip()
+            clean_message = message.strip()
 
-        if submit:
-            if not name or not email or not message:
-                st.warning("⚠ Please fill all fields.")
+            if not clean_name or not clean_email or not clean_message:
+                st.warning("Please fill in all fields before sending your message.")
+            elif not is_valid_email(clean_email):
+                st.warning("Please enter a valid email address.")
             else:
                 with st.spinner("Sending message..."):
-                    time.sleep(1)
+                    success, response_message = send_message(clean_name, clean_email, clean_message)
 
-                    response = requests.post(
-                        "https://formspree.io/f/mykdjywe",  # 🔴 Replace this
-                        data={
-                            "name": name,
-                            "email": email,
-                            "message": message
-                        }
-                    )
+                if success:
+                    st.success(response_message)
+                else:
+                    st.error(response_message)
 
-                    if response.status_code == 200:
-                        st.success("✅ Message sent successfully! I will get back to you soon.")
-                    else:
-                        st.error("❌ Something went wrong. Please try again later.")
-
-# ---------------- FOOTER ----------------
-st.divider()
-st.caption("© 2025 Anjani Kumar Pokhrel | Built with Streamlit 🚀")
+st.caption("(c) 2026 Anjani Kumar Pokhrel | Built with Streamlit")

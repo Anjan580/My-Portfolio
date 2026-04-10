@@ -1,14 +1,22 @@
-# 👨‍💻 Anjani Kumar Pokhrel – Portfolio  
+# Anjani Kumar Pokhrel Portfolio
 
-Personal portfolio website built with **Streamlit** showcasing my projects, skills, and experience in **AI, Machine Learning & Data Science**.  
+Personal portfolio built with Streamlit to showcase experience, projects, and contact details in data analytics, machine learning, and data science.
 
-🔹 Includes resume download  
-🔹 Interactive project showcase  
-🔹 Contact form integration  
+## Highlights
+- Cleaned and refactored Streamlit app structure
+- Improved visual styling and project presentation
+- Resume download support
+- Contact form with basic validation and request timeout handling
 
-## ▶ Run 
-- Portfolio:https://my-portfolio-anjan.streamlit.app/
+## Run Locally
+```bash
+pip install -r requirement.txt
+streamlit run portfolio.py
+```
 
-## 🔗 Connect With Me
-- [LinkedIn:](https://www.linkedin.com/in/anjan-pokhrel/) 
-- [GitHub:](https://github.com/Anjan580)  
+## Live App
+- https://my-portfolio-anjan.streamlit.app/
+
+## Connect
+- LinkedIn: https://www.linkedin.com/in/anjan-pokhrel/
+- GitHub: https://github.com/Anjan580
