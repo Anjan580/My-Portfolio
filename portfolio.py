@@ -131,7 +131,11 @@ with tab1:
     st.header("🎓 Education")
     st.write("""
     **Bachelor’s in Computer Science & Information Technology**  
+<<<<<<< HEAD
     Trinity International College, Dillibazar  
+=======
+    Trinity International College, Dillibazar Kathmandu 
+>>>>>>> 469aa7d (Add end years of eduction)
     2022 – 2026
     """)
 
