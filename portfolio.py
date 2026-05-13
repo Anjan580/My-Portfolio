@@ -40,7 +40,7 @@ SKILLS = {
 HIGHLIGHTS = [
     ("Projects", "8+"),
     ("Focus", "AI / ML"),
-    ("Current Role", "Foodmandu"),
+    ("Current Role", "Data Analyst at Foodmandu"),
 ]
 
 PROJECTS = [
