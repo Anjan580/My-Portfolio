@@ -15,7 +15,7 @@ FORMSPREE_ENDPOINT = "https://formspree.io/f/mykdjywe"
 
 PROFILE = {
     "name": "Anjani Kumar Pokhrel",
-    "title": "Data Analyst Intern at Foodmandu",
+    "title": "Full- Time Data Analyst(Trainee) at Foodmandu",
     "tagline": "Machine Learning and Data Science enthusiast building practical, data-driven solutions.",
     "location": "Kathmandu, Nepal",
     "email": "anjanpokhrel580@gmail.com",
